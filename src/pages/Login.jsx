@@ -1,19 +1,20 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { alertaGenerica, alertaRedirecciones, generarToken } from '../helpers/funciones'
 import './Login.css'
+
 function Login() {
-
-  /* Definir un arreglo de 5 usuarios y validar el inicio de sesión para cada uno */
-
   const [getName, setName] = useState("")
   const [getPassword, setPasword] = useState("")
   let redireccion = useNavigate()
 
   function iniciarSesion(user, password) {
     if (user === 'admin' && password === '123456') {
-      redireccion('/home')
+      let tokenAscceso = generarToken()
+      localStorage.setItem("token", tokenAscceso)
+      alertaRedirecciones(redireccion, "Bienvenido", "Sera redireccionado al Home", "Success", "/home")
     } else {
-      alert('Error de credenciales')
+      alertaGenerica("Error", "Usuario y/o contraseña incorrecto", "error")
     }
   }
 
